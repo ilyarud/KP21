@@ -11,25 +11,42 @@
             <TextBox Text="{Binding Data}" 
                      VerticalAlignment="Stretch" 
                      VerticalContentAlignment="Center"
-                     Margin="1 1 5 1"
+                     Margin="1 1 1 1"
                      MaxLines="1"/>
         </DataTemplate>
         <DataTemplate x:Key="IntegerTemplate" DataType="{x:Type local:PropertyViewModel}">
             <TextBox Text="{Binding Data}" 
                      VerticalAlignment="Stretch" 
                      VerticalContentAlignment="Center"
-                     Margin="1 1 5 1"
+                     Margin="1 1 1 1"
                      MaxLines="1"
                      PreviewTextInput="IntegetTextInput"
                      />
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Background="#FF252526">
-        <ListBox Name="stack" Background="{x:Null}" BorderBrush="Gray" >
+    <Grid Background="{StaticResource Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}" Height="22">
+            <Label Content="Свойства" HorizontalAlignment="Left" Padding="1" Margin="2 1 1 1"/>
+        </Border>
+        <ListBox Grid.Row="1" Name="stack" Background="Transparent" HorizontalAlignment="Stretch" BorderBrush="{StaticResource BorderBrushNormal}" BorderThickness="1">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Focusable" Value="False"/>
-                    
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Grid Margin="0,0,0,0">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" SnapsToDevicePixels="True"/>
+                                    <ContentPresenter Margin="8,5"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>

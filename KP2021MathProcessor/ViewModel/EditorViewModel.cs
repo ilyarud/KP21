@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using System.Windows.Data;
 using System.Windows;
 using KP2021MathProcessor.Attributes;
+using System.Windows.Media;
 
 namespace KP2021MathProcessor.ViewModel
 {
@@ -38,11 +39,13 @@ namespace KP2021MathProcessor.ViewModel
         bool isPaused = false;
         Task executTask;
         Runner.Interpreter interpreter;
+        string status = "Готово";
         #endregion
         #region Property
         public uint Delay { get => delayChain; set => delayChain = value; }
         public bool IsPaused { get => isPaused; set => SetProperty(ref isPaused, value); }
         public string OutText { get => outText; set => SetProperty(ref outText, value); }
+        public string Status { get => status; set => SetProperty(ref status, value); }
         public bool IsNotExecute { get => isNotExecute; set => SetProperty(ref isNotExecute, value); }
         public object SelectedItem { get => selctedNode; set => SetProperty(ref selctedNode, (INodeViewModel)value); }
         public NodifyObservableCollection<ConnectionViewModel> Connections { get; } = new NodifyObservableCollection<ConnectionViewModel>();
@@ -124,6 +127,7 @@ namespace KP2021MathProcessor.ViewModel
         {
             if (isNotExecute)
             {
+                Status = "Сборка";
                 OutText = "";
                 var nodes = Utilite.GetNodesNotKnot(Nodes);
                 interpreter = new Runner.Interpreter(nodes, Utilite.BuildConnection(Nodes, Connections), new Runner.Contex() { PublicString = (x) => OutText += x });
@@ -133,12 +137,17 @@ namespace KP2021MathProcessor.ViewModel
                 executTask.ContinueWith(
                     (x) => {
                         IsNotExecute = true;
-                    });
+                        Status = "Готово";
+                        executeBrash(false);
+                    });         
                 executTask.Start();
+                Status = "Выполнение";
+                executeBrash(true);
                 IsNotExecute = false;
             }
             else
             {
+                Status = "Остановка";
                 if (IsPaused) pause();
                 interpreter.Stop();
                 interpreter.Refresh();
@@ -151,9 +160,11 @@ namespace KP2021MathProcessor.ViewModel
             {
                 interpreter.Res();
                 IsPaused = false;
+                Status = "Выполнение";
             }
             else
             {
+                Status = "Пауза";
                 interpreter.Pause();
                 IsPaused = true;
             }
@@ -224,6 +235,17 @@ namespace KP2021MathProcessor.ViewModel
                 }
                 Nodes.AddRange(nodeViewModels);
                 Connections.AddRange(connectionViewModels);
+            }
+        }
+        private void executeBrash(bool flag)
+        {
+            if (flag)
+            {
+                Application.Current.Resources["BackgroundBorder"] = new SolidColorBrush(Color.FromRgb(202,81,0));
+            }
+            else 
+            {
+                Application.Current.Resources["BackgroundBorder"] = new SolidColorBrush(Color.FromRgb(28, 151, 234));
             }
         }
     }

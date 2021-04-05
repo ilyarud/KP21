@@ -10,7 +10,7 @@
         xmlns:mvvm="clr-namespace:MVVM"
         xmlns:controls="clr-namespace:KP2021MathProcessor.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <Window.Resources>
         <mvvm:BindingProxy DataContext="{Binding}" x:Key="EditorProxy" />
 
@@ -27,14 +27,15 @@
     <Window.DataContext>
         <vm:EditorViewModel/>
     </Window.DataContext>
-    <Grid Background="#FF2D2D30">
+    <Grid Background="#FF252526">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="280"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="30*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" Grid.ColumnSpan="2" Height="23" VerticalAlignment="Top">
@@ -47,7 +48,7 @@
                           Command="{Binding OpenFile}" 
                           Icon="{StaticResource OpenFileIcon}" 
                           IsEnabled="{Binding IsNotExecute}"/>
-                <Separator Style="{StaticResource sep}"/>
+                <Separator/>
                 <MenuItem Header="Сохранить файл" 
                           Command="{Binding SaveFile}" 
                           Icon="{StaticResource SaveIcon}" 
@@ -120,13 +121,22 @@
                 </Button.Style>
             </Button>
         </ToolBar>
-
-        <nodify:NodifyEditor Grid.Row="1" Grid.Column="0" 
+        <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}"  Height="22">
+                <Label Content="Редактор" HorizontalAlignment="Left" Margin="2 1 1 1" Padding="1" />
+            </Border>
+            <nodify:NodifyEditor Grid.Row="1"  
+                                 Height="auto"
                              ItemsSource="{Binding Nodes}" 
                              Connections="{Binding Connections}" 
                              ConnectionCompletedCommand="{Binding ConnectionCreate }" 
                              DisconnectConnectorCommand="{Binding Disconnect}" 
-                             BorderBrush="Gray" BorderThickness="1">
+                             BorderThickness="1"                            
+                             BorderBrush="{StaticResource BackgroundNormal}">
             <nodify:NodifyEditor.Resources>
                 <DataTemplate DataType="{x:Type vmNode:KnotNodeViewModel}">
                     <nodify:KnotNode Content="{Binding Connector}">
@@ -220,13 +230,28 @@
                 <KeyBinding Command="{Binding OpenFile}" Gesture="CTRL+O"/>
                 <KeyBinding Command="{Binding SaveFile}" Gesture="CTRL+S"/>
             </nodify:NodifyEditor.InputBindings>
-        </nodify:NodifyEditor>
-        <GridSplitter Grid.Column="1" Grid.Row="1" />
+            </nodify:NodifyEditor>
+        </Grid>
+        <GridSplitter Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Transparent" />
         <controls:PropertyGrid Grid.Row="1" 
                                Grid.Column="1" 
-                               Grid.RowSpan="2" 
-                               ItemNode="{Binding Path=SelectedItem.Props}" 
-                               IsEnabled="{Binding IsNotExecute}"/>
-        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Height="200" Foreground="#FFF1F1F1" Text="{Binding OutText}"/>
+                               Margin="5 0 5 0"
+                               ItemNode="{Binding Path=SelectedItem.Props}"/>
+        <GridSplitter Grid.Row="2" Grid.ColumnSpan="2" ShowsPreview="False" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Background="Transparent"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="5 5 5 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}" Height="22">
+                <Label Content="Вывод" HorizontalAlignment="Left" Padding="1" Margin="2 1 1 1"/>
+            </Border>
+            <Border Grid.Row="1" Height="auto"  BorderThickness="1" BorderBrush="{StaticResource BorderBrushNormal}">
+                <TextBlock Foreground="{StaticResource Foreground}" Background="{StaticResource Background}" Text="{Binding OutText}" />
+            </Border>
+        </Grid>
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2" Height="22" HorizontalAlignment="Stretch" Background="{DynamicResource BackgroundBorder}">
+            <StatusBarItem Content="{Binding Status}" Foreground="{StaticResource Foreground}"/>
+        </StatusBar>
     </Grid>
 </Window>
