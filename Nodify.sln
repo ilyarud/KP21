@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nodify", "Nodify\Nodify.csproj", "{A4349FD1-2774-42F2-90FD-7D8F4CA8BB71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KP2021MathProcessor", "KP2021MathProcessor\KP2021MathProcessor.csproj", "{BB6C9CA4-F52D-4175-84D1-6900DE605A2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KP2021", "KP2021\KP2021.csproj", "{BB6C9CA4-F52D-4175-84D1-6900DE605A2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

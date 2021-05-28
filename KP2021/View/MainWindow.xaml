@@ -1,0 +1,267 @@
+﻿<Window x:Class="KP2021MathProcessor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KP2021MathProcessor"
+        xmlns:nodify="https://miroiu.github.io/nodify"
+        xmlns:vm="clr-namespace:KP2021MathProcessor.ViewModel"
+        xmlns:vmNode="clr-namespace:KP2021MathProcessor.ViewModel.Node"
+        xmlns:mvvm="clr-namespace:MVVM"
+        xmlns:controls="clr-namespace:KP2021MathProcessor.Controls"
+        mc:Ignorable="d"
+        Title="MainWindow"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/Controls/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <mvvm:BindingProxy DataContext="{Binding}" x:Key="EditorProxy" />
+
+            <Style TargetType="{x:Type nodify:Connector}" BasedOn="{StaticResource ResourceKey= {x:Type nodify:Connector}}">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="{Binding Color}"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Anchor" Value="{Binding Anchor, Mode=OneWayToSource}"/>
+            <Setter Property="IsConnected" Value="{Binding IsConnect}"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:EditorViewModel/>
+    </Window.DataContext>
+    <Grid Background="#FF252526">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="280"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="2" Height="23" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Новый файл"
+                          Command="{Binding NewFileCommand}" 
+                          Icon="{StaticResource NewFileIcon}" 
+                          IsEnabled="{Binding IsNotExecute}"/>
+                <MenuItem Header="Открыть файл" 
+                          Command="{Binding OpenFileCommand}" 
+                          Icon="{StaticResource OpenFileIcon}" 
+                          IsEnabled="{Binding IsNotExecute}"/>
+                <Separator/>
+                <MenuItem Header="Сохранить файл" 
+                          Command="{Binding SaveFileCommand}" 
+                          Icon="{StaticResource SaveIcon}" 
+                          IsEnabled="{Binding IsNotExecute}"/>
+                <Separator/>
+                <MenuItem Header="Настройки" 
+                          Command="{Binding SettingsOpenCommand}"
+                          IsEnabled="{Binding IsNotExecute}"/>
+            </MenuItem>
+            <MenuItem Header="Справка"/>
+        </Menu>
+        <ToolBar Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0, 23, 0, 0">
+            <Button Command="{Binding NewFileCommand}" ToolTip="Новый файл" IsEnabled="{Binding IsNotExecute}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+                        <Setter Property="Content" Value="{StaticResource NewFileIcon}"/>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding OpenFileCommand}" ToolTip="Открыть файл" IsEnabled="{Binding IsNotExecute}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+                        <Setter Property="Content" Value="{StaticResource OpenFileIcon}"/>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding SaveFileCommand}" ToolTip="Сохранить файл" IsEnabled="{Binding IsNotExecute}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+                        <Setter Property="Content" Value="{StaticResource SaveIcon}"/>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Command="{Binding ExecuteCommand}" ToolTip="Запуск">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}">
+                        <Setter Property="Content" Value="{StaticResource RunIcon}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsNotExecute}" Value="false">
+                                <DataTrigger.Setters>
+                                    <Setter Property="Content" Value="{StaticResource StopIcon}"/>
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <TextBox MaxLines="1" Width="100" ToolTip="Задержка при выполнелии(ms)" Style="{StaticResource ResourceKey={x:Type TextBox}}">
+                <TextBox.Text>
+                    <Binding Path="Delay"  ValidatesOnExceptions="True">
+                        <Binding.ValidationRules>
+                            <ExceptionValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                <Validation.ErrorTemplate>
+                    <ControlTemplate>
+                        <Border BorderThickness="2" BorderBrush="Red">
+                            <AdornedElementPlaceholder/>
+                        </Border>
+                    </ControlTemplate>
+                </Validation.ErrorTemplate>
+            </TextBox>
+            <Button Command="{Binding PauseCommand}" ToolTip="Пауза" IsEnabled="{Binding IsNotExecute, Converter= {vm:NotBoolConverter}}">
+                <Button.Style>
+                    <Style  TargetType="{x:Type Button}" BasedOn="{StaticResource IconButton}" >
+                        <Setter Property="Content" Value="{StaticResource PauseIcon}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="true">
+                                <Setter Property="Content" Value="{StaticResource UnpauseIcon}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </ToolBar>
+        <Grid Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}"  Height="22">
+                <Label Content="Редактор" HorizontalAlignment="Left" Margin="2 1 1 1" Padding="1" />
+            </Border>
+            <nodify:NodifyEditor Grid.Row="1"  
+                                 Height="auto"
+                             ItemsSource="{Binding Nodes}" 
+                             Connections="{Binding Connections}" 
+                             ConnectionCompletedCommand="{Binding ConnectionCreateCommand }" 
+                             DisconnectConnectorCommand="{Binding DisconnectCommand}" 
+                             BorderThickness="1"                            
+                             BorderBrush="{StaticResource BackgroundNormal}">
+            <nodify:NodifyEditor.Resources>
+                <DataTemplate DataType="{x:Type vmNode:KnotNodeViewModel}">
+                    <nodify:KnotNode Content="{Binding Connector}">
+                    </nodify:KnotNode>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vmNode:NodeViewModel}">
+                    <nodify:Node Header="{Binding Title}" 
+                                 nodify:ItemContainer.LocationOverride="{Binding Location}"                                
+                                 Input="{Binding Input}"
+                                 Output="{Binding Output}">
+                        <nodify:Node.Style>
+                            <Style TargetType="{x:Type nodify:Node}" BasedOn="{StaticResource ResourceKey={x:Type nodify:Node}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsExecute}" Value="true">
+                                        <Setter Property="BorderBrush">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FFFF7B7B" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="BorderThickness" Value="5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </nodify:Node.Style>
+                    </nodify:Node>
+                </DataTemplate>
+                <Style TargetType="{x:Type nodify:NodeInput}"
+                       BasedOn="{StaticResource {x:Type nodify:NodeInput}}">
+                    <Setter Property="Header" Value="{Binding Header}"/>
+                    <Setter Property="Anchor" Value="{Binding Anchor, Mode=OneWayToSource}"/>
+                    <Setter Property="IsConnected" Value="{Binding IsConnect}"/>
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding Color}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="{x:Type nodify:NodeOutput}"
+                       BasedOn="{StaticResource ResourceKey= {x:Type nodify:NodeOutput}}">
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Header" Value="{Binding Header}"/>
+                    <Setter Property="Anchor" Value="{Binding Anchor, Mode=OneWayToSource}"/>
+                    <Setter Property="IsConnected" Value="{Binding IsConnect}"/>
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{Binding Color}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </nodify:NodifyEditor.Resources>
+            <nodify:NodifyEditor.ConnectionTemplate>
+                <DataTemplate DataType="{x:Type vm:ConnectionViewModel}">
+                        <nodify:Connection Source="{Binding Output.Anchor}"
+                                              Target="{Binding Input.Anchor}"
+                                              SourceOffset="10 0"
+                                              TargetOffset="20 0"
+                                              OffsetMode="None">
+                        <nodify:Connection.Stroke>
+                            <SolidColorBrush Color="{Binding Color}"/>
+                        </nodify:Connection.Stroke>
+
+                        </nodify:Connection>
+                    </DataTemplate>
+            </nodify:NodifyEditor.ConnectionTemplate>
+            <nodify:NodifyEditor.ContextMenu>
+            <ContextMenu ItemsSource="{Binding ContextMenuItems}"  Width="auto" >
+                    <ContextMenu.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Name}" Command="{Binding Source={StaticResource EditorProxy}, Path= DataContext.CreateNodeCommand}" >
+                                <MenuItem.CommandParameter>
+                                    <MultiBinding Converter="{vm:NodeInfoConverter}">
+                                        <Binding/>
+                                        <Binding RelativeSource="{RelativeSource AncestorType=ContextMenu}" 
+                                             Path="PlacementTarget.MouseLocation"/>
+                                    </MultiBinding>
+                                </MenuItem.CommandParameter>
+                            </MenuItem>
+                        </DataTemplate>
+                    </ContextMenu.ItemTemplate>
+                </ContextMenu>
+            </nodify:NodifyEditor.ContextMenu>
+            <nodify:NodifyEditor.ItemContainerStyle>
+                <Style TargetType="{x:Type nodify:ItemContainer}" BasedOn="{StaticResource ResourceKey={x:Type nodify:ItemContainer}}">
+                    <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+                    <Setter Property="Location" Value="{Binding Location}" />
+                </Style>
+            </nodify:NodifyEditor.ItemContainerStyle>
+            <nodify:NodifyEditor.InputBindings>
+                <KeyBinding Command="{Binding DeleteSelectionCommand}" Key="Delete"/>
+                <KeyBinding Command="{Binding CopyCommand}" Gesture="CTRL+C"/>
+                <KeyBinding Command="{Binding PasteCommand}" Gesture="CTRL+V"/>
+                <KeyBinding Command="{Binding OpenFileCommand}" Gesture="CTRL+O"/>
+                <KeyBinding Command="{Binding SaveFileCommand}" Gesture="CTRL+S"/>
+            </nodify:NodifyEditor.InputBindings>
+            </nodify:NodifyEditor>
+        </Grid>
+        <GridSplitter Grid.Column="1" Grid.Row="1" ShowsPreview="False" Width="3" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Transparent" />
+        <controls:PropertyGrid Grid.Row="1" 
+                               Grid.Column="1" 
+                               Margin="5 0 5 0"
+                               ItemNode="{Binding Path=SelectedItem.Props}"/>
+        <GridSplitter Grid.Row="2" Grid.ColumnSpan="2" ShowsPreview="False" Height="3" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Background="Transparent"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="5 5 5 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}" Height="22">
+                <Label Content="Вывод" HorizontalAlignment="Left" Padding="1" Margin="2 1 1 1"/>
+            </Border>
+            <Border Grid.Row="1" Height="auto"  BorderThickness="1" BorderBrush="{StaticResource BorderBrushNormal}">
+                <TextBlock Foreground="{StaticResource Foreground}" Background="{StaticResource Background}" Text="{Binding OutText}" />
+            </Border>
+        </Grid>
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2" Height="22" HorizontalAlignment="Stretch" Background="{DynamicResource BackgroundBorder}">
+            <StatusBarItem Content="{Binding Status}" Foreground="{StaticResource Foreground}"/>
+        </StatusBar>
+    </Grid>
+</Window>
