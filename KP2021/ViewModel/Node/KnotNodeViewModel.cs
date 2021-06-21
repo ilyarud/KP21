@@ -9,7 +9,7 @@ namespace KP2021MathProcessor.ViewModel.Node
 {
     class KnotNodeViewModel : ObservableObject, INodeViewModel
     {
-        KnotNode node;
+        private KnotNode node;
         public KnotNodeViewModel(KnotNode node)
         {
             this.node = node;

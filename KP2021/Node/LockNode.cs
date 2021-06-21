@@ -7,7 +7,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Заблокировать")]
     class LockNode : ANode
     {
-        MutexConnector mutexConnector;
+        private MutexConnector mutexConnector;
         public LockNode()
         {
             AddInputConnector(new FlowConnector(this));

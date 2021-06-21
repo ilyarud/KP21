@@ -19,7 +19,7 @@ namespace KP2021MathProcessor.Node
             connectors.Add(con);
         }
         public string Header => throw new NotImplementedException();
-        List<IConnector> connectors;
+        private List<IConnector> connectors;
         public IEnumerable<IConnector> InputConnectors => connectors;
 
         public IEnumerable<IConnector> OutputConnectors => connectors;

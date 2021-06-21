@@ -26,7 +26,7 @@ namespace KP2021MathProcessor.ViewModel.Node
         private Point point;
         public Point Anchor { get => point; set => SetProperty(ref point, value); }
 
-        bool isConnect;
+        private bool isConnect;
         private INodeViewModel node;
         private IConnector connector;
 

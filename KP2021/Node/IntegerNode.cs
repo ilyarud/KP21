@@ -8,7 +8,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Число(Integer)")]
     class IntegerNode : ANode
     {
-        class IntData
+        private class IntData
         {
             public int Value
             {
@@ -23,7 +23,7 @@ namespace KP2021MathProcessor.Node
         }
         public override string Header => "Число(Integer)";
 
-        IntData sd = new IntData();
+        private IntData sd = new IntData();
         public override object Props { get => sd; set => sd = (IntData)value; }
 
         public override bool IsExecuted { get => false; }

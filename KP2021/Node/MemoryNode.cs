@@ -17,9 +17,9 @@ namespace KP2021MathProcessor.Node
     
         public override bool IsExecuted { get => false; }
 
-        int cicle = int.MaxValue;
-        bool read;
-        bool write;
+        private int cicle = int.MaxValue;
+        private bool read;
+        private bool write;
         public override void Initialize()
         {
             base.Initialize();

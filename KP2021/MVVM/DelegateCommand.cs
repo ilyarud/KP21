@@ -5,22 +5,22 @@ namespace MVVM
 {
     public class DelegateCommand : INodifyCommand
     {
-        private readonly Action _action;
-        private readonly Func<bool>? _condition;
+        private readonly Action action;
+        private readonly Func<bool>? condition;
 
         public event EventHandler? CanExecuteChanged;
 
         public DelegateCommand(Action action, Func<bool>? executeCondition = default)
         {
-            _action = action ?? throw new ArgumentNullException(nameof(action));
-            _condition = executeCondition;
+            this.action = action ?? throw new ArgumentNullException(nameof(action));
+            condition = executeCondition;
         }
 
         public bool CanExecute(object parameter)
-            => _condition?.Invoke() ?? true;
+            => condition?.Invoke() ?? true;
 
         public void Execute(object parameter)
-            => _action();
+            => action();
 
         public void RaiseCanExecuteChanged()
             => CanExecuteChanged?.Invoke(this, new EventArgs());

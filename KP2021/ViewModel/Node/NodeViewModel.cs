@@ -10,16 +10,17 @@ namespace KP2021MathProcessor.ViewModel.Node
 {
     class NodeViewModel : ObservableObject, INodeViewModel
     {
+        NodifyObservableCollection<IConnectorViewModel> input = new NodifyObservableCollection<IConnectorViewModel>();
+        NodifyObservableCollection<IConnectorViewModel> output = new NodifyObservableCollection<IConnectorViewModel>();
+
+        private INode node;
+        private bool selected;
         public NodeViewModel(INode node)
         {
             this.node = node;
             foreach (var item in this.node.InputConnectors) input.Add(ConnectorViewModelBuilder.Build(item, this, true));
             foreach (var item in this.node.OutputConnectors) output.Add(ConnectorViewModelBuilder.Build(item, this, false));
         }
-        NodifyObservableCollection<IConnectorViewModel> input = new NodifyObservableCollection<IConnectorViewModel>();
-        NodifyObservableCollection<IConnectorViewModel> output = new NodifyObservableCollection<IConnectorViewModel>();
-
-        INode node;
 
         public event INodeViewModel.ChangeDelegate Changed;
 
@@ -30,7 +31,7 @@ namespace KP2021MathProcessor.ViewModel.Node
         public IEnumerable<IConnectorViewModel> Output => output.AsEnumerable();
 
         public INode Node => node;
-        bool selected;
+
         public bool IsSelected { get => selected;
             set
             {

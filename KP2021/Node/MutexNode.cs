@@ -9,7 +9,7 @@ namespace KP2021MathProcessor.Node
     {
        
 
-        bool isLock;
+        private bool isLock;
 
         public override string Header => "Мьютекс";
         
@@ -22,6 +22,7 @@ namespace KP2021MathProcessor.Node
         public override void Initialize()
         {
             base.Initialize();
+            isLock = false;
         }
         public void Unlock()
         {           

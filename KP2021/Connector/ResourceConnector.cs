@@ -10,7 +10,7 @@ namespace KP2021MathProcessor.Connector
         public override ConnectorType ConnectorType => ConnectorType.Data;
         public override Color Color => System.Windows.Media.Colors.LimeGreen;
         public override int IdType => 5;
-        Func<object> getValue;
+        private Func<object> getValue;
 
         public override Func<object> ValueGetFunction { get => getValue; }
     }

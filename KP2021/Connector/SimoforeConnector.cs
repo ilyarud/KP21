@@ -14,7 +14,7 @@ namespace KP2021MathProcessor.Connector
         public override Color Color => System.Windows.Media.Colors.CadetBlue;
         public override int IdType => 3;
 
-        Func<object> getValue;
+        private Func<object> getValue;
   
         public override Func<object> ValueGetFunction { get => getValue; }
     }

@@ -17,7 +17,7 @@ namespace KP2021MathProcessor.Node
             }
 
         }
-        IntegerConnector integerConnector;
+        private IntegerConnector integerConnector;
         public StringBuilderIntNode()
         {
             integerConnector = new IntegerConnector(this, null) { Name = "Данные(int)" };
@@ -26,7 +26,7 @@ namespace KP2021MathProcessor.Node
         }
         public override string Header => "Формат строки(integer)";
 
-        StringBuilderData sd = new StringBuilderData();
+        private StringBuilderData sd = new StringBuilderData();
         public override object Props { get => sd; set => sd = (StringBuilderData)value; }
 
         public override bool IsExecuted { get => false; }

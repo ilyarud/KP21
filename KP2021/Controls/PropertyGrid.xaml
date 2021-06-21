@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}" Height="22">
+        <Border Grid.Row="0" Background="{DynamicResource BackgroundBorder}" Height="22">
             <Label Content="Свойства" HorizontalAlignment="Left" Padding="1" Margin="2 1 1 1"/>
         </Border>
         <ListBox Grid.Row="1" Name="stack" Background="Transparent" HorizontalAlignment="Stretch" BorderBrush="{StaticResource BorderBrushNormal}" BorderThickness="1">

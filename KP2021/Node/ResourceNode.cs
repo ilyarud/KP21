@@ -8,7 +8,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Ресурс")]
     class ResourceNode : ANode
     {
-        class ResourceData
+        private class ResourceData
         {
             public int num
             {
@@ -24,9 +24,9 @@ namespace KP2021MathProcessor.Node
         ResourceData sd = new ResourceData();
         public override object Props { get => sd; set => sd = (ResourceData)value; }
         public override bool IsExecuted { get => false; }
-        int count;
-        int maxCount;
-        int cicle = int.MaxValue;
+        private int count;
+        private int maxCount;
+        private int cicle = int.MaxValue;
         public override bool Execute(Contex contex)
         {
             throw new System.NotImplementedException();

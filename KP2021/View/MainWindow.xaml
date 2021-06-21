@@ -10,7 +10,7 @@
         xmlns:mvvm="clr-namespace:MVVM"
         xmlns:controls="clr-namespace:KP2021MathProcessor.Controls"
         mc:Ignorable="d"
-        Title="MainWindow"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        Title="Simulation environment"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -59,9 +59,6 @@
                           Icon="{StaticResource SaveIcon}" 
                           IsEnabled="{Binding IsNotExecute}"/>
                 <Separator/>
-                <MenuItem Header="Настройки" 
-                          Command="{Binding SettingsOpenCommand}"
-                          IsEnabled="{Binding IsNotExecute}"/>
             </MenuItem>
             <MenuItem Header="Справка"/>
         </Menu>
@@ -135,7 +132,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}"  Height="22">
+            <Border Grid.Row="0" Background="{DynamicResource BackgroundBorder}"  Height="22">
                 <Label Content="Редактор" HorizontalAlignment="Left" Margin="2 1 1 1" Padding="1" />
             </Border>
             <nodify:NodifyEditor Grid.Row="1"  
@@ -253,7 +250,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" Background="{StaticResource BackgroundBorder}" Height="22">
+            <Border Grid.Row="0" Background="{DynamicResource BackgroundBorder}" Height="22">
                 <Label Content="Вывод" HorizontalAlignment="Left" Padding="1" Margin="2 1 1 1"/>
             </Border>
             <Border Grid.Row="1" Height="auto"  BorderThickness="1" BorderBrush="{StaticResource BorderBrushNormal}">

@@ -10,7 +10,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Семафор")]
     class SimoforeNode : ANode
     {
-        class SimoforeData
+        private class SimoforeData
         {
             public int MaxCount {
                 get; 
@@ -22,12 +22,12 @@ namespace KP2021MathProcessor.Node
             }
         }
 
-        int count = 0;
+        private int count = 0;
 
         public override string Header => "Семафор";
         public override Type TypePropertys => typeof(SimoforeData);
 
-        SimoforeData sd = new SimoforeData();
+        private SimoforeData sd = new SimoforeData();
         public override object Props { get => sd; set => 
                 sd = (SimoforeData)value; }
         public override bool IsExecuted { get => false; }

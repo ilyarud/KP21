@@ -10,7 +10,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Вывод")]
     class OutputConsoleNode : ANode
     {
-        StringConnector stringConnector;
+        private StringConnector stringConnector;
         public OutputConsoleNode()
         {
             AddInputConnector(new FlowConnector(this));

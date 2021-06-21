@@ -37,9 +37,9 @@ namespace MVVM
         protected static readonly PropertyChangedEventArgs CountPropertyChanged = new PropertyChangedEventArgs("Count");
         protected static readonly NotifyCollectionChangedEventArgs ResetCollectionChanged = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
 
-        private readonly List<Action<T>> _added = new List<Action<T>>();
-        private readonly List<Action<T>> _removed = new List<Action<T>>();
-        private readonly List<Action<IList<T>>> _cleared = new List<Action<IList<T>>>();
+        private readonly List<Action<T>> added = new List<Action<T>>();
+        private readonly List<Action<T>> removed = new List<Action<T>>();
+        private readonly List<Action<IList<T>>> cleared = new List<Action<IList<T>>>();
 
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -59,7 +59,7 @@ namespace MVVM
         {
             if (added != null)
             {
-                _added.Add(added);
+                this.added.Add(added);
             }
             return this;
         }
@@ -68,7 +68,7 @@ namespace MVVM
         {
             if (removed != null)
             {
-                _removed.Add(removed);
+                this.removed.Add(removed);
             }
             return this;
         }
@@ -77,32 +77,32 @@ namespace MVVM
         {
             if (cleared != null)
             {
-                _cleared.Add(cleared);
+                this.cleared.Add(cleared);
             }
             return this;
         }
 
         protected virtual void NotifyOnItemAdded(T item)
         {
-            for (int i = 0; i < _added.Count; i++)
+            for (int i = 0; i < added.Count; i++)
             {
-                _added[i](item);
+                added[i](item);
             }
         }
 
         protected virtual void NotifyOnItemRemoved(T item)
         {
-            for (int i = 0; i < _removed.Count; i++)
+            for (int i = 0; i < removed.Count; i++)
             {
-                _removed[i](item);
+                removed[i](item);
             }
         }
 
         protected virtual void NotifyOnItemsCleared(IList<T> items)
         {
-            for (int i = 0; i < _cleared.Count; i++)
+            for (int i = 0; i < cleared.Count; i++)
             {
-                _cleared[i](items);
+                cleared[i](items);
             }
         }
 
@@ -115,7 +115,7 @@ namespace MVVM
             var items = new List<T>(this);
             base.ClearItems();
 
-            if (_cleared.Count > 0)
+            if (cleared.Count > 0)
             {
                 NotifyOnItemsCleared(items);
             }

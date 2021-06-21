@@ -8,7 +8,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Выход из секции")]
     class ReleaseNode : ANode
     {
-        SimoforeConnector simoforeConnector;
+        private SimoforeConnector simoforeConnector;
         public ReleaseNode()
         {
             simoforeConnector = new SimoforeConnector(this, null) { Name = "Семафор" };

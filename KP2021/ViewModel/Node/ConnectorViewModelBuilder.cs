@@ -8,7 +8,7 @@ namespace KP2021MathProcessor.ViewModel.Node
     class ConnectorViewModelBuilder
     {
         public static IConnectorViewModel Build(IConnector connector,INodeViewModel baseNode, bool isInput)
-        {
+        {           
             IConnectorViewModel connectorView = null;
             switch (connector.ConnectorType)
             {

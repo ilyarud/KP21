@@ -8,7 +8,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Вход в секцию")]
     class OneWaitNode : ANode
     {
-        SimoforeConnector simoforeConnector;
+        private SimoforeConnector simoforeConnector;
         public OneWaitNode()
         {
             

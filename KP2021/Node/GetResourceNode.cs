@@ -7,7 +7,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Обращение к ресурсу")]
     class GetResourceNode : ANode
     {
-        ResourceConnector resourceConnector;
+        private ResourceConnector resourceConnector;
         public GetResourceNode()
         {
 

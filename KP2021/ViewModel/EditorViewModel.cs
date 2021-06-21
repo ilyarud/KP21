@@ -29,19 +29,18 @@ namespace KP2021MathProcessor.ViewModel
         public INodifyCommand CopyCommand { get; set; }
         public INodifyCommand PasteCommand { get; set; }
         public INodifyCommand PauseCommand { get; set; }
-        public INodifyCommand SettingsOpenCommand { get; set; }
         #endregion
         #region Vars
-        string outText = "";
-        INodeViewModel selctedNode;
-        string path = null;
-        bool isNotExecute = true;
-        uint delayChain = 2000;
-        bool isPaused = false;
-        Task executTask;
-        Runner.Interpreter interpreter;
-        string status = "Готово";
-        View.ProtertyWindow settingsWindow = null;
+        private string outText = "";
+        private INodeViewModel selctedNode;
+        private string path = null;
+        private bool isNotExecute = true;
+        private uint delayChain = 2000;
+        private bool isPaused = false;
+        private Task executTask;
+        private Runner.Interpreter interpreter;
+        private string status = "Готово";
+        
         #endregion
         #region Property
         public uint Delay { get => delayChain; set => delayChain = value; }
@@ -66,8 +65,7 @@ namespace KP2021MathProcessor.ViewModel
             NewFileCommand = new DelegateCommand(NewFile);
             CopyCommand = new DelegateCommand(Copy);
             PasteCommand = new DelegateCommand(Paste);
-            PauseCommand = new DelegateCommand(Pause);
-            SettingsOpenCommand = new DelegateCommand(SettingsOpen);
+            PauseCommand = new DelegateCommand(Pause);           
 
             Utils.InitNodesList();
             foreach (var item in Utils.NodeTypes)
@@ -265,22 +263,6 @@ namespace KP2021MathProcessor.ViewModel
             }
         }
         
-        private void SettingsOpen()
-        {
-            if (settingsWindow == null)
-            {
-                settingsWindow = new View.ProtertyWindow();
-                settingsWindow.Closed += SettingsWindow_Closed;
-            }
-            settingsWindow.Show();
-            settingsWindow.Focus();
-        }
-
-        private void SettingsWindow_Closed(object sender, EventArgs e)
-        {
-            settingsWindow.Closed -= SettingsWindow_Closed;
-            settingsWindow = null;
-        }
 
         private void executeBrash(bool flag)
         {

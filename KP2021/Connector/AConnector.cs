@@ -12,7 +12,7 @@ namespace KP2021MathProcessor.Connector
         {
             this.node = node;
         }
-        INode node;
+        private INode node;
         public string Name { get; set; }
 
         public abstract int IdType { get; }

@@ -7,7 +7,7 @@ namespace KP2021MathProcessor.Node
     [NodeInfo("Чтение")]
     class ReadMemoryNode : ANode
     {
-        MemoryConnector memoryConnector;
+        private MemoryConnector memoryConnector;
         public ReadMemoryNode()
         {
 

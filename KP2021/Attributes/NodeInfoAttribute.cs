@@ -7,7 +7,7 @@ namespace KP2021MathProcessor.Attributes
     [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = true)]
     sealed class NodeInfoAttribute : Attribute
     {
-        readonly string nameNode;
+        private readonly string nameNode;
 
         public NodeInfoAttribute(string nameNode)
         {

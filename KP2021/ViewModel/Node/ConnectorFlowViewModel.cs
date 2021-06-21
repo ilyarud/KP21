@@ -15,8 +15,8 @@ namespace KP2021MathProcessor.ViewModel.Node
             this.connector = connector;
             this.node = node;
         }
-        INodeViewModel node;
-        IConnector connector;
+        private INodeViewModel node;
+        private IConnector connector;
         public string Header => connector.Name;
 
         public Color Color => connector.Color;
@@ -29,7 +29,7 @@ namespace KP2021MathProcessor.ViewModel.Node
         public Point Anchor { get => point;
             set => SetProperty(ref point, value); }
 
-        bool isConected;
+        private bool isConected;
         public bool IsConnect { get => isConected; set => SetProperty(ref isConected, value); }
 
         public INodeViewModel Node => node;

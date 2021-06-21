@@ -12,12 +12,12 @@ namespace KP2021MathProcessor.Runner
     class Interpreter
     {
 
-        Contex contex;
-        Model model;
+        private Contex contex;
+        private Model model;
 
-        bool isStop = false;
-        Mutex mutex = new Mutex();
-        RunTimeInfo runTimeInfo = new RunTimeInfo();
+        private bool isStop = false;
+        private Mutex mutex = new Mutex();
+        private RunTimeInfo runTimeInfo = new RunTimeInfo();
         public int Delay { get; set; } = 2000;
         public Interpreter(Model model, Contex contex)
         {

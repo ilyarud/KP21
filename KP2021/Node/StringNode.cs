@@ -20,7 +20,7 @@ namespace KP2021MathProcessor.Node
             AddOutputConnector(new StringConnector(this, () => sd.Data) { Name = "" });
         }
         public override string Header => "Строка";
-        StringData sd = new StringData();
+        private StringData sd = new StringData();
         public override object Props { get => sd; set => sd = (StringData)value; }
         public override bool IsExecuted { get => false; }
         public override Type TypePropertys => typeof(StringData);

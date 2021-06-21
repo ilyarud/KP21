@@ -12,7 +12,7 @@ namespace KP2021MathProcessor.Node
         private List<IConnector> inputConnectors = new List<IConnector>();
         private List<IConnector> outputConnectors = new List<IConnector>();
         private Point location;
-        int countId = 0;
+        private int countId = 0;
         public abstract string Header { get; }
 
         public virtual int TimeExec { get; } = 0;
